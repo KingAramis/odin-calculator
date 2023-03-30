@@ -1,51 +1,82 @@
-const oneBtn = document.querySelector(".one-btn");
-const twoBtn = document.querySelector(".two-btn");
-const threeBtn = document.querySelector(".three-btn");
-const fourBtn = document.querySelector(".four-btn");
-const fiveBtn = document.querySelector(".five-btn");
-const sixBtn = document.querySelector(".six-btn");
-const sevenBtn = document.querySelector(".seven-btn");
-const eightBtn = document.querySelector(".eight-btn");
-const nineBtn = document.querySelector(".nine-btn");
-const zeroBtn = document.querySelector(".zero-btn");
-const displayContent = document.querySelector(".display");
+/* SCRIPTS MY BOIIII */
 
-oneBtn.addEventListener('click', (e) => {
-    displayContent.textContent += "1";
+
+const displayMain = document.querySelector(".display");
+const displaySmall = document.querySelector(".display-small");
+const numBtns = document.querySelectorAll(".num-btn");
+const operatorBtns = document.querySelectorAll(".operator-btn");
+const equalBtn = document.querySelector(".btn-equal");
+
+
+// Add click events for buttons
+
+numBtns.forEach(button => {
+    button.addEventListener('click', (event) => displayMain.textContent += button.textContent);
 });
 
-twoBtn.addEventListener('click', (e) => {
-    displayContent.textContent += "2";
+operatorBtns.forEach(button => {
+    button.addEventListener('click', (event) => {
+    const lastCharBool = handleOperator();
+        if (lastCharBool) displayMain.textContent += button.textContent;
+    });
 });
 
-threeBtn.addEventListener('click', (e) => {
-    displayContent.textContent += "3";
+equalBtn.addEventListener('click', (event) => {
+    // function to check the display text, return operator
+    // function to return numbers in display text
+    // switch case, depending on the operator, to call arthimetic functions.
+    const operator = checkForOperator();
+    console.log(operator);
+
 });
 
-fourBtn.addEventListener('click', (e) => {
-    displayContent.textContent += "4";
-});
 
-fiveBtn.addEventListener('click', (e) => {
-    displayContent.textContent += "5";
-});
+// functions to handle exceptions
 
-sixBtn.addEventListener('click', (e) => {
-    displayContent.textContent += "6";
-});
+function handleOperator() {
+    const lastChar = displayMain.textContent[displayMain.textContent.length - 1];
+    if (lastChar === "+" || lastChar === "-" || lastChar === "*" ||
+        lastChar === "/" || lastChar === "%" || lastChar === ".") {
+            return false;
+        } else {
+            return true;
+        };
+};
 
-sevenBtn.addEventListener('click', (e) => {
-    displayContent.textContent += "7";
-});
+// functions for calculate function
 
-eightBtn.addEventListener('click', (e) => {
-    displayContent.textContent += "8";
-});
+function calculate() {
+    const operator = checkForOperator();
+    switch (operator) {
+        case "+":
+            addNumbers(a, b);
+            break;
+        case "-":
+            substractNumbers(a, b);
+            break;
+        case "*":
+            multiplyNumbers(a, b);
+            break;
+        case "/":
+            divideNumbers(a, b);
+            break;
+        case "%":
+            percentageNumbers(a, b);
+            break;
+    };
+}
 
-nineBtn.addEventListener('click', (e) => {
-    displayContent.textContent += "9";
-});
+function checkForOperator() {
+    let equation = displayMain.textContent;
+    for (let i = 0; i < equation.length - 1; i++) {
+        if (equation[i] === '+' || equation[i] === '-' || equation[i] === '*' ||
+            equation[i] === '/' || equation[i] === "%") return equation[i];
+    };
+    return null;
+};
 
-zeroBtn.addEventListener('click', (e) => {
-    displayContent.textContent += "0";
-});
+// Arithmetic operation functions
+
+function addNumbers() {
+
+}

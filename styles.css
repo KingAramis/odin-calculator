@@ -12,13 +12,20 @@ body {
 
 .display-box {
     display: flex;
+    flex-direction: column;
     justify-content: flex-end;
-    align-items: center;
+    align-items: flex-end;
     min-width: 340px;
     min-height: 100px;
+    max-width: 341px;
     background-color: #BFC3BA;
     border-radius: 1rem;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.display-small {
+    font-size: 1rem;
+    padding: 0.5rem;
 }
 
 .display {
@@ -56,7 +63,7 @@ button {
     background: none;
     border: none;
     border-radius: 10px;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.1s ease-in-out;
     /*box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);*/
 }
 
