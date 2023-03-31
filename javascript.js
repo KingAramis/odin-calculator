@@ -8,6 +8,7 @@ const operatorBtns = document.querySelectorAll(".operator-btn");
 const equalBtn = document.querySelector(".btn-equal");
 const delBtn = document.querySelector(".del-btn")
 const clearBtn = document.querySelector(".clear-btn");
+const dotBtn = document.querySelector(".dot-btn");
 
 
 // Add click events for buttons
@@ -19,19 +20,24 @@ numBtns.forEach(button => {
 
 operatorBtns.forEach(button => {
     button.addEventListener('click', (event) => {
-    let lastCharNum = handleOperator();
+    let lastCharNum = checkLastChar();
     const hasOperator = getOperator();
-    if (hasOperator !== null && lastCharNum === true) calculate();
-    lastCharNum = handleOperator();
-    if (lastCharNum) displaySmall.textContent += button.textContent;
+    if (hasOperator !== null && lastCharNum === false) calculate();
+    lastCharNum = checkLastChar();
+    if (!lastCharNum) displaySmall.textContent += button.textContent;
     });
 });
 
 equalBtn.addEventListener('click', (event) => {
-    // function to check the display text, return operator
-    // function to return numbers in display text
-    // switch case, depending on the operator, to call arthimetic functions.
     calculate();
+});
+
+dotBtn.addEventListener('click', (event) => {
+    const lastCharNum = checkLastChar();
+    const hasDot = checkForDot();
+    if (hasDot === false && lastCharNum === false) {
+        displaySmall.textContent += ".";
+    };
 });
 
 delBtn.addEventListener('click', (event) => deleteChar());
@@ -41,14 +47,32 @@ clearBtn.addEventListener('click', (event) => clearDisplay());
 
 // functions to handle exceptions
 
-function handleOperator() {
+
+function checkForDot() {
+    const operator = getOperator();
+    if (operator === null) {
+        const displayString = displaySmall.textContent;
+        for (let i = 0; i < displayString.length; i++) {
+            if (displayString[i] === ".") return true;
+        };
+    } else {
+        const intArray = getIntArray(operator);
+        let numberString = intArray[1].toString();
+        for (let i = 0; i < numberString.length; i++) {
+            if (numberString[i] === ".") return true;
+        };
+    };
+    return false;
+};
+
+function checkLastChar() {
 	const lastChar = displaySmall.textContent[
 			displaySmall.textContent.length -1];
     if (lastChar === "+" || lastChar === "-" || lastChar === "*" ||
         lastChar === "/" || lastChar === "%" || lastChar === ".") {
-            return false;
-        } else {
             return true;
+        } else {
+            return false;
         };
 };
 
@@ -126,17 +150,4 @@ function deleteChar() {
     const equationString = displaySmall.textContent;
     displaySmall.textContent = equationString.slice(0, -1);
 };
-
-
-
-// to do 
-// add sum to display
-// when added to dispay, clear funciton to clear display before hand
-// finsish other arthimetic functions
-// finish exceptions
-//     - apply calculate function when second operator is added to string
-//     - if an operator already exists in the string, calculate, then add to
-//     string
-//
-//
 
